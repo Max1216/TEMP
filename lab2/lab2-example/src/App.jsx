@@ -1,47 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import SimpleClassComponent from './components/SimpleClassComp.jsx'
 import SimpleFunctionalComponent from './components/SimpleFunctionalComp.jsx'
+import { Student, Teacher } from './components/helper.js'
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import Navbar from './components/Navbar.jsx';
+import HooksContainer from './components/HooksContainer.jsx';
+import ThemeComponent from './components/ThemeComponent.jsx'
+import { ThemeProvider } from './context/ThemeContext.jsx'
 
-const Student = {
-  id: 1,
-  name: "John"
-}
-
-const Teacher = {
-  id2: 101,
-  name2: "Dr. Smith"
-}
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      {/* <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p> */}
-      <SimpleClassComponent />
-      <SimpleFunctionalComponent student={{ ...Student, ...Teacher}} />
+      <ThemeProvider>
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path="/" element = {<SimpleClassComponent />} />
+            <Route path="/functional" element = {<SimpleFunctionalComponent student={Student} teacher={Teacher} />} />
+            <Route path="/hooks" element = {<HooksContainer />} /> 
+            <Route path="/theme" element = {<ThemeComponent />} />
+          </Routes>
+
+        </BrowserRouter>
+      </ThemeProvider>
+    
     </>
   )
 }
